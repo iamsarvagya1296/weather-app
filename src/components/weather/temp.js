@@ -7,12 +7,11 @@ const Temp = () => {
     const [searchValue,setSearchValue] = useState("pune");
     const [tempInfo, setTempInfo] = useState({}); 
 
-    const getWeatherInfo = async () => {
+    const getWeatherInfo = async (value) => {
         try {
-            let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=d91ec7235238b9ef46627b153ee57612`;
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${value}&units=metric&appid=d91ec7235238b9ef46627b153ee57612`;
             let res = await fetch(url);
             let data = await res.json();
-            // console.log(data);
            const { temp, humidity,pressure } = data.main;
            //    console.log(feels_like);
            const { main: weathermood } = data.weather[0];
@@ -40,9 +39,9 @@ const Temp = () => {
     };
 
     useEffect(() => { 
-        getWeatherInfo();
-
+        getWeatherInfo("pune");
     },[]);
+
   return (
         <>
         <div className='wrap'>
@@ -58,7 +57,7 @@ const Temp = () => {
         />
 
 </div>
-<button className='searchButton' type="button" onClick={getWeatherInfo} >
+<button className='searchButton' type="button" onClick={()=>getWeatherInfo(searchValue)} >
     Search
 </button>
 </div>
